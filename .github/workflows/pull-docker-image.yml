@@ -1,4 +1,4 @@
-name: Pull Docker Image from GHCR
+name: Build and Push Docker Image to GHCR
 
 on:
   push:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  pull-image:
+  build-and-push:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,9 +21,28 @@ jobs:
         username: hydren-dev
         password: ${{ secrets.GHCR_TOKEN }}
 
-    - name: Pull Docker image
+    - name: Check if Docker image exists
+      id: check_image
       run: |
-        docker pull ghcr.io/hydren-dev/daemon:latest
+        if ! docker pull ghcr.io/hydren-dev/daemon:latest; then
+          echo "Image not found, proceeding to build."
+          echo "image_exists=false" >> $GITHUB_ENV
+        else
+          echo "Image exists."
+          echo "image_exists=true" >> $GITHUB_ENV
+        fi
+
+    - name: Build Docker image if not exists
+      if: env.image_exists == 'false'
+      run: |
+        docker build -t ghcr.io/hydren-dev/daemon:latest .
+        echo "Image built successfully."
+
+    - name: Push Docker image to GHCR
+      if: env.image_exists == 'false'
+      run: |
+        docker push ghcr.io/hydren-dev/daemon:latest
+        echo "Image pushed to GHCR."
 
     - name: Verify Docker image
       run: |
