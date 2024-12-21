@@ -1,0 +1,30 @@
+name: Pull Docker Image from GHCR
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  pull-image:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Log into GitHub Container Registry
+      uses: docker/login-action@v2
+      with:
+        registry: ghcr.io
+        username: hydren-dev
+        password: ${{ secrets.GHCR_TOKEN }}
+
+    - name: Pull Docker image
+      run: |
+        docker pull ghcr.io/hydren-dev/daemon:latest
+
+    - name: Verify Docker image
+      run: |
+        docker images
