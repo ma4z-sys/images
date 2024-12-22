@@ -22,13 +22,13 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone the repository
-RUN git clone https://github.com/HydraLabs-beta/daemon /opt/daemon
+RUN adduser -D -h /home/container container
 
 # Set working directory
-WORKDIR /opt/daemon
+USER container
+ENV  USER=container HOME=/home/container
 
-# Install dependencies
-RUN npm install
+WORKDIR /home/container
 
 # Copy entrypoint script into the image
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
