@@ -21,20 +21,21 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Clone the repository
-RUN adduser -D -h /home/container container
-
-# Set working directory
-USER container
-ENV  USER=container HOME=/home/container
-
-WORKDIR /home/container
+# Add a user to run the container
+RUN adduser --disabled-password --gecos "" container
 
 # Copy entrypoint script into the image
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 
 # Make the entrypoint script executable
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set working directory
+WORKDIR /home/container
+
+# Switch to the newly created user
+USER container
+ENV USER=container HOME=/home/container
 
 # Set entrypoint
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
