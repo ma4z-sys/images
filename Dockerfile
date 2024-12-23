@@ -1,6 +1,5 @@
-FROM python:3.12
+FROM node:lts
 
 WORKDIR /app/data
 
-CMD ["sh", "-c", "$START"]
-CMD ["sh", "-c", "$START2"]
+CMD ["sh", "-c", "$START; $START2"]
