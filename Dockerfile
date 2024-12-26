@@ -1,28 +1,11 @@
-# Start with the latest Ubuntu image
-FROM ubuntu:latest
+FROM scratch
 
-# Update package list and install required packages, including sudo
-RUN apt-get update && apt-get install -y \
-    curl \
-    wget \
-    git \
-    sudo \
-    coreutils && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+ADD https://github.com/curl/curl/releases/download/curl-7_81_0/curl-7.81.0-linux-x86_64.tar.gz /curl/
+ADD https://github.com/git/git/archive/refs/tags/v2.37.1.tar.gz /git/
 
-# Change the working directory to /app/data
+ADD https://bun.sh/installer /bun-installer.sh
+
 WORKDIR /app/data
-
-# Set up the environment to make it appear as if /app/data is the root
-ENV HOME=/app/data
-ENV PS1="\u@\h:\W\$ "
-
-# Create symlinks for root-level directories in /app/data
-RUN for dir in bin etc lib lib64 sbin usr var opt; do \
-        mkdir -p /app/data/$dir && \
-        ln -sfn /app/data/$dir /$dir; \
-    done && \
-    mkdir -p /app/data/root && ln -sfn /app/data/root /root
 
 COPY start.sh /usr/local/bin/start.sh
 
