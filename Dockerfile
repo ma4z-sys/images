@@ -1,6 +1,6 @@
 FROM scratch
 
-ADD https://github.com/curl/curl/releases/download/curl-7_81_0/curl-7.81.0-linux-x86_64.tar.gz /curl/
+ADD https://github.com/curl/curl/releases/download/curl-8_11_1/curl-8.11.1.tar.gz /curl/
 ADD https://github.com/git/git/archive/refs/tags/v2.37.1.tar.gz /git/
 
 ADD curl -fsSL https://bun.sh/install | bash
