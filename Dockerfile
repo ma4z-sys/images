@@ -4,10 +4,12 @@ FROM ubuntu:22.04
 # Update package list and install necessary dependencies
 RUN apt-get update && apt-get install -y curl git bash unzip 
 
-# Install Bun using curl
+# Install Bun (direct installation)
 RUN curl -fsSL https://bun.sh/install | bash
 
-RUN bash -c "source ~/.bashrc"
+# Add Bun to the PATH directly in the Dockerfile
+ENV PATH="/root/.bun/bin:${PATH}"
+
 # Set the working directory for the app
 WORKDIR /app/data
 
