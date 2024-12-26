@@ -7,8 +7,7 @@ RUN apt-get update && apt-get install -y curl git bash unzip
 # Install Bun using curl
 RUN curl -fsSL https://bun.sh/install | bash
 
-RUN source ~/.bashrc
-
+RUN bash -c "source ~/.bashrc"
 # Set the working directory for the app
 WORKDIR /app/data
 
