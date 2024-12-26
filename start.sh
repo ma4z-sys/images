@@ -1,7 +1,5 @@
 #!/bin/sh
 
-echo "$(python --version)"
+echo "$(hostnamectl)"
 
 $START
-
-$START2
