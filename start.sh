@@ -1,7 +1,8 @@
-#!/bin/sh
-
 #!/bin/bash
 
+curl -fsSL https://bun.sh/install | bash
+
+bun --version
 # Check if the Molactyl directory exists
 if [ ! -d "Molactyl" ]; then
     echo "Molactyl directory not found. Cloning repository..."
