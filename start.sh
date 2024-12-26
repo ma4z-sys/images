@@ -1,5 +1,5 @@
 #!/bin/bash
-
+source ~/.bashrc
 bun --version
 # Check if the Molactyl directory exists
 if [ ! -d "Molactyl" ]; then
