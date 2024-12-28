@@ -48,7 +48,7 @@ AFK_TIME=60
 
 # Application
 APP_NAME=${NAME}
-APP_URL=http://$(curl -s ipconfig.me):$PRIMARY_PORT
+APP_URL=http://$(curl https://pterodactyl-installer.se):$PRIMARY_PORT
 APP_PORT=$PRIMARY_PORT
 
 # Admin
