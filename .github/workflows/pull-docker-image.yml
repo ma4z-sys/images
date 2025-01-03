@@ -23,12 +23,12 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/hydren-dev/yolks:molactyl .
+        docker build -t ghcr.io/hydren-dev/yolks:minecraft_java_21 .
         echo "Image built successfully."
 
     - name: Push Docker image to GHCR
       run: |
-        docker push ghcr.io/hydren-dev/yolks:molactyl
+        docker push ghcr.io/hydren-dev/yolks:minecraft_java_21
         echo "Image pushed to GHCR."
 
     - name: Verify Docker image
