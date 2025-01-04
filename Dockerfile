@@ -12,7 +12,6 @@ RUN apt-get update && \
 WORKDIR /app
 
 RUN git clone https://github.com/hydralabs-beta/daemon.git . 
-RUN cd daemon
 
 RUN npm install
 
