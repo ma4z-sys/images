@@ -1,18 +1,11 @@
-FROM ubuntu:latest
+FROM kalilinux/kali-rolling
 
-RUN apt-get update && apt-get install -y \
-    bash && \
+# Update and install ALL Kali tools (this is huge!)
+RUN apt-get update && \
+    apt-get install -y kali-linux-everything && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /app/data && \
-    chmod -R 700 /app/data
-
-COPY start.sh /usr/local/bin/start.sh
-RUN chmod +x /usr/local/bin/start.sh
-
 WORKDIR /app/data
 
-USER root
-
-CMD ["/usr/local/bin/start.sh"]
+CMD ["/bin/bash"]
