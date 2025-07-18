@@ -6,31 +6,33 @@ on:
       - main
   workflow_dispatch:
 
+permissions:
+  contents: read
+  packages: write
+
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Log into GitHub Container Registry
+    - name: Log in to GitHub Container Registry
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
-        username: ma4z-sys
-        password: ${{ secrets.GHCR_SECRET }}
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Build Docker image
       run: |
-        docker build -t ghcr.io/ma4z-spec/linux:gn_kali .
-        echo "Image built successfully."
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_kali
+        echo "Building image: $IMAGE_NAME"
+        docker build -t $IMAGE_NAME .
 
-    - name: Push Docker image to GHCR
+    - name: Push Docker image
       run: |
-        docker push ghcr.io/ma4z-spec/linux:gn_kali
-        echo "Image pushed to GHCR."
-
-    - name: Verify Docker image
-      run: |
-        docker images
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_kali
+        echo "Pushing image: $IMAGE_NAME"
+        docker push $IMAGE_NAME
