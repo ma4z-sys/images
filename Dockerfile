@@ -1,7 +1,11 @@
 FROM ubuntu:22.04
 
-# Install required packages
-RUN apt-get update && apt-get install -y \
+ENV DEBIAN_FRONTEND=noninteractive \
+    TZ=Etc/UTC
+
+# Install required packages without interactive prompts
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     qemu-system-x86 \
     wget \
     x11vnc \
@@ -12,7 +16,8 @@ RUN apt-get update && apt-get install -y \
     supervisor \
     gzip \
     git \
-    && apt-get clean
+    tzdata && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Create directories
 RUN mkdir -p /root/.vnc /opt/novnc /opt/vm
