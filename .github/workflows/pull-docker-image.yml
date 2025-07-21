@@ -27,12 +27,12 @@ jobs:
 
     - name: Build Docker image
       run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_kali
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_win98
         echo "Building image: $IMAGE_NAME"
         docker build -t $IMAGE_NAME .
 
     - name: Push Docker image
       run: |
-        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_kali
+        IMAGE_NAME=ghcr.io/${{ github.repository_owner }}/linux:gn_win98
         echo "Pushing image: $IMAGE_NAME"
         docker push $IMAGE_NAME
